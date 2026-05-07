@@ -1,0 +1,9 @@
+Data agregada
+
+Cliente final: cliente.demo@maquinaria.local
+
+Usuario empresa: empresa.demo@maquinaria.local
+
+Superadministrador: superadmin@maquinaria.local
+
+Contraseña para los 3 usuarios: Password123!

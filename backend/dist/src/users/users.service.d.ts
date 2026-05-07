@@ -1,0 +1,121 @@
+import { PrismaService } from '../prisma/prisma.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+export declare class UsersService {
+    private readonly prisma;
+    constructor(prisma: PrismaService);
+    getProfile(userId: string): Promise<{
+        company: {
+            id: string;
+            email: string;
+            status: import(".prisma/client").$Enums.CompanyStatus;
+            phone: string;
+            country: string;
+            city: string;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            slug: string;
+            taxId: string;
+            logoUrl: string | null;
+            description: string;
+            website: string | null;
+            address: string;
+            verifiedAt: Date | null;
+            rejectionReason: string | null;
+            plan: import(".prisma/client").$Enums.PlanType;
+            planExpiresAt: Date | null;
+        } | null;
+        id: string;
+        email: string;
+        googleId: string | null;
+        role: import(".prisma/client").$Enums.Role;
+        status: import(".prisma/client").$Enums.UserStatus;
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        avatarUrl: string | null;
+        country: string;
+        city: string;
+        companyId: string | null;
+        companyRole: import(".prisma/client").$Enums.CompanyRole | null;
+        emailVerifiedAt: Date | null;
+        lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    updateProfile(userId: string, dto: UpdateUserDto): Promise<{
+        id: string;
+        email: string;
+        googleId: string | null;
+        role: import(".prisma/client").$Enums.Role;
+        status: import(".prisma/client").$Enums.UserStatus;
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        avatarUrl: string | null;
+        country: string;
+        city: string;
+        companyId: string | null;
+        companyRole: import(".prisma/client").$Enums.CompanyRole | null;
+        emailVerifiedAt: Date | null;
+        lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    getAdminUsers(query: {
+        search?: string;
+        role?: string;
+        page?: string;
+        limit?: string;
+    }): Promise<{
+        items: {
+            company: {
+                id: string;
+                name: string;
+            } | null;
+            id: string;
+            email: string;
+            googleId: string | null;
+            role: import(".prisma/client").$Enums.Role;
+            status: import(".prisma/client").$Enums.UserStatus;
+            firstName: string;
+            lastName: string;
+            phone: string | null;
+            avatarUrl: string | null;
+            country: string;
+            city: string;
+            companyId: string | null;
+            companyRole: import(".prisma/client").$Enums.CompanyRole | null;
+            emailVerifiedAt: Date | null;
+            lastLoginAt: Date | null;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
+    updateUserStatus(id: string, status: any): Promise<{
+        id: string;
+        email: string;
+        googleId: string | null;
+        passwordHash: string | null;
+        role: import(".prisma/client").$Enums.Role;
+        status: import(".prisma/client").$Enums.UserStatus;
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        avatarUrl: string | null;
+        country: string;
+        city: string;
+        companyId: string | null;
+        companyRole: import(".prisma/client").$Enums.CompanyRole | null;
+        emailVerifiedAt: Date | null;
+        lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+}
