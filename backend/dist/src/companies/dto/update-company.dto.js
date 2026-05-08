@@ -22,6 +22,10 @@ class UpdateCompanyDto {
     city;
     address;
     logoUrl;
+    coverUrl;
+    openingHours;
+    socialMedia;
+    gallery;
 }
 exports.UpdateCompanyDto = UpdateCompanyDto;
 __decorate([
@@ -74,4 +78,23 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCompanyDto.prototype, "logoUrl", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateCompanyDto.prototype, "coverUrl", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], UpdateCompanyDto.prototype, "openingHours", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], UpdateCompanyDto.prototype, "socialMedia", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], UpdateCompanyDto.prototype, "gallery", void 0);
 //# sourceMappingURL=update-company.dto.js.map

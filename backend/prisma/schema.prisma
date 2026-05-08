@@ -51,6 +51,7 @@ model Company {
   name        String
   taxId       String
   logoUrl     String?
+  coverUrl    String?
   description String
   website     String?
   phone       String
@@ -58,6 +59,8 @@ model Company {
   country     String
   city        String
   address     String
+  openingHours Json?
+  socialMedia  Json?
 
   // Estado
   status          CompanyStatus @default(PENDING_REVIEW)
@@ -79,6 +82,16 @@ model Company {
   quotes    Quote[]           @relation("CompanyQuotes")
   reviews   Review[]          @relation("CompanyReviews")
   invites   CompanyInvite[]
+  images    CompanyImage[]
+}
+
+model CompanyImage {
+  id        String @id @default(cuid())
+  companyId String
+  url       String
+  order     Int    @default(0)
+
+  company Company @relation(fields: [companyId], references: [id])
 }
 
 model Product {

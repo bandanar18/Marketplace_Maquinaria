@@ -57,9 +57,12 @@ export declare class AuthController {
             slug: string;
             taxId: string;
             logoUrl: string | null;
+            coverUrl: string | null;
             description: string;
             website: string | null;
             address: string;
+            openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+            socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
             verifiedAt: Date | null;
             rejectionReason: string | null;
             plan: import(".prisma/client").$Enums.PlanType;

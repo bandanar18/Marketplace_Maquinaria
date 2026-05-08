@@ -6,16 +6,18 @@ export declare class CompaniesController {
     getAllCompanies(query: any): Promise<{
         items: {
             id: string;
+            slug: string;
+            name: string;
+            logoUrl: string | null;
+            coverUrl: string | null;
+            description: string;
             country: string;
             city: string;
-            name: string;
-            slug: string;
-            logoUrl: string | null;
-            description: string;
+            openingHours: import("@prisma/client/runtime/library").JsonValue;
             verifiedAt: Date | null;
             _count: {
-                reviews: number;
                 products: number;
+                reviews: number;
             };
         }[];
         meta: {
@@ -33,47 +35,59 @@ export declare class CompaniesController {
             lastName: string;
             companyRole: import(".prisma/client").$Enums.CompanyRole | null;
         }[];
+        images: {
+            id: string;
+            companyId: string;
+            order: number;
+            url: string;
+        }[];
     } & {
         id: string;
-        email: string;
-        status: import(".prisma/client").$Enums.CompanyStatus;
-        phone: string;
-        country: string;
-        city: string;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
         slug: string;
+        name: string;
         taxId: string;
         logoUrl: string | null;
+        coverUrl: string | null;
         description: string;
         website: string | null;
+        phone: string;
+        email: string;
+        country: string;
+        city: string;
         address: string;
+        openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+        socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
+        status: import(".prisma/client").$Enums.CompanyStatus;
         verifiedAt: Date | null;
         rejectionReason: string | null;
         plan: import(".prisma/client").$Enums.PlanType;
         planExpiresAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateMyCompany(req: any, updateCompanyDto: UpdateCompanyDto): Promise<{
         id: string;
-        email: string;
-        status: import(".prisma/client").$Enums.CompanyStatus;
-        phone: string;
-        country: string;
-        city: string;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
         slug: string;
+        name: string;
         taxId: string;
         logoUrl: string | null;
+        coverUrl: string | null;
         description: string;
         website: string | null;
+        phone: string;
+        email: string;
+        country: string;
+        city: string;
         address: string;
+        openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+        socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
+        status: import(".prisma/client").$Enums.CompanyStatus;
         verifiedAt: Date | null;
         rejectionReason: string | null;
         plan: import(".prisma/client").$Enums.PlanType;
         planExpiresAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getCompanyStats(req: any): Promise<{
         activeProducts: number;
@@ -93,19 +107,19 @@ export declare class CompaniesController {
     getMembers(req: any): Promise<{
         id: string;
         email: string;
+        createdAt: Date;
         firstName: string;
         lastName: string;
         avatarUrl: string | null;
         companyRole: import(".prisma/client").$Enums.CompanyRole | null;
-        createdAt: Date;
     }[]>;
     getInvites(req: any): Promise<{
         id: string;
         email: string;
-        role: import(".prisma/client").$Enums.CompanyRole;
         status: import(".prisma/client").$Enums.InviteStatus;
-        companyId: string;
         createdAt: Date;
+        role: import(".prisma/client").$Enums.CompanyRole;
+        companyId: string;
         expiresAt: Date;
         token: string;
     }[]>;
@@ -115,42 +129,42 @@ export declare class CompaniesController {
     }): Promise<{
         id: string;
         email: string;
-        role: import(".prisma/client").$Enums.CompanyRole;
         status: import(".prisma/client").$Enums.InviteStatus;
-        companyId: string;
         createdAt: Date;
+        role: import(".prisma/client").$Enums.CompanyRole;
+        companyId: string;
         expiresAt: Date;
         token: string;
     }>;
     cancelInvite(req: any, id: string): Promise<{
         id: string;
         email: string;
-        role: import(".prisma/client").$Enums.CompanyRole;
         status: import(".prisma/client").$Enums.InviteStatus;
-        companyId: string;
         createdAt: Date;
+        role: import(".prisma/client").$Enums.CompanyRole;
+        companyId: string;
         expiresAt: Date;
         token: string;
     }>;
     removeMember(req: any, id: string): Promise<{
         id: string;
-        email: string;
-        googleId: string | null;
-        passwordHash: string | null;
-        role: import(".prisma/client").$Enums.Role;
-        status: import(".prisma/client").$Enums.UserStatus;
-        firstName: string;
-        lastName: string;
         phone: string | null;
-        avatarUrl: string | null;
+        email: string;
         country: string;
         city: string;
+        status: import(".prisma/client").$Enums.UserStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        passwordHash: string | null;
+        googleId: string | null;
+        role: import(".prisma/client").$Enums.Role;
+        firstName: string;
+        lastName: string;
+        avatarUrl: string | null;
         companyId: string | null;
         companyRole: import(".prisma/client").$Enums.CompanyRole | null;
         emailVerifiedAt: Date | null;
         lastLoginAt: Date | null;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     importInventory(req: any, body: {
         csvData: string;
@@ -160,53 +174,53 @@ export declare class CompaniesController {
     }>;
     getCompanyBySlug(slug: string): Promise<{
         id: string;
-        email: string;
-        status: import(".prisma/client").$Enums.CompanyStatus;
-        phone: string;
-        country: string;
-        city: string;
-        createdAt: Date;
-        name: string;
         slug: string;
+        name: string;
         logoUrl: string | null;
         description: string;
         website: string | null;
+        phone: string;
+        email: string;
+        country: string;
+        city: string;
         address: string;
+        status: import(".prisma/client").$Enums.CompanyStatus;
         verifiedAt: Date | null;
         plan: import(".prisma/client").$Enums.PlanType;
+        createdAt: Date;
         _count: {
-            reviews: number;
             products: number;
+            reviews: number;
         };
     }>;
     getCompanyProducts(slug: string, query: any): Promise<{
         items: ({
-            category: {
-                id: string;
-                name: string;
-                slug: string;
-            };
             images: {
                 id: string;
                 order: number;
                 url: string;
                 productId: string;
             }[];
+            category: {
+                id: string;
+                slug: string;
+                name: string;
+            };
         } & {
             id: string;
-            status: import(".prisma/client").$Enums.ProductStatus;
-            country: string;
-            city: string;
-            companyId: string;
-            createdAt: Date;
-            updatedAt: Date;
             slug: string;
             description: string;
+            country: string;
+            city: string;
             address: string | null;
+            status: import(".prisma/client").$Enums.ProductStatus;
             rejectionReason: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            companyId: string;
+            brand: string;
             title: string;
             categoryId: string;
-            brand: string;
             model: string;
             year: number;
             condition: import(".prisma/client").$Enums.Condition;
@@ -232,8 +246,8 @@ export declare class CompaniesController {
         })[];
         categories: {
             id: string;
-            name: string;
             slug: string;
+            name: string;
         }[];
         meta: {
             total: number;
@@ -245,24 +259,27 @@ export declare class CompaniesController {
     getAdminCompanies(req: any, query: any): Promise<{
         items: {
             id: string;
-            email: string;
-            status: import(".prisma/client").$Enums.CompanyStatus;
-            phone: string;
-            country: string;
-            city: string;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
             slug: string;
+            name: string;
             taxId: string;
             logoUrl: string | null;
+            coverUrl: string | null;
             description: string;
             website: string | null;
+            phone: string;
+            email: string;
+            country: string;
+            city: string;
             address: string;
+            openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+            socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
+            status: import(".prisma/client").$Enums.CompanyStatus;
             verifiedAt: Date | null;
             rejectionReason: string | null;
             plan: import(".prisma/client").$Enums.PlanType;
             planExpiresAt: Date | null;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
         meta: {
             total: number;
@@ -276,47 +293,53 @@ export declare class CompaniesController {
         rejectionReason?: string;
     }): Promise<{
         id: string;
-        email: string;
-        status: import(".prisma/client").$Enums.CompanyStatus;
-        phone: string;
-        country: string;
-        city: string;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
         slug: string;
+        name: string;
         taxId: string;
         logoUrl: string | null;
+        coverUrl: string | null;
         description: string;
         website: string | null;
+        phone: string;
+        email: string;
+        country: string;
+        city: string;
         address: string;
+        openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+        socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
+        status: import(".prisma/client").$Enums.CompanyStatus;
         verifiedAt: Date | null;
         rejectionReason: string | null;
         plan: import(".prisma/client").$Enums.PlanType;
         planExpiresAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateCompanyPlan(req: any, id: string, body: {
         plan: string;
         expiresAt?: string;
     }): Promise<{
         id: string;
-        email: string;
-        status: import(".prisma/client").$Enums.CompanyStatus;
-        phone: string;
-        country: string;
-        city: string;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
         slug: string;
+        name: string;
         taxId: string;
         logoUrl: string | null;
+        coverUrl: string | null;
         description: string;
         website: string | null;
+        phone: string;
+        email: string;
+        country: string;
+        city: string;
         address: string;
+        openingHours: import("@prisma/client/runtime/library").JsonValue | null;
+        socialMedia: import("@prisma/client/runtime/library").JsonValue | null;
+        status: import(".prisma/client").$Enums.CompanyStatus;
         verifiedAt: Date | null;
         rejectionReason: string | null;
         plan: import(".prisma/client").$Enums.PlanType;
         planExpiresAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }

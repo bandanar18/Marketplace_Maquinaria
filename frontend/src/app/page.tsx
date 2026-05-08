@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StarRating } from "@/components/star-rating";
+import { companyService } from "@/services/company.service";
+import { CompanyCard } from "@/components/company-card";
 
 const heroCategories = [
   { name: "Excavadoras", icon: Pickaxe },
@@ -63,12 +65,18 @@ export default function Home() {
   const [searchLocation, setSearchLocation] = useState("");
   const router = useRouter();
 
-  const { data: productsData, isLoading } = useQuery({
+  const { data: productsData, isLoading: isLoadingProducts } = useQuery({
     queryKey: ["featured-products"],
     queryFn: () => productsService.getProducts({ limit: 4 }),
   });
 
+  const { data: companiesData, isLoading: isLoadingCompanies } = useQuery({
+    queryKey: ["featured-companies"],
+    queryFn: () => companyService.getCompanies({ limit: 3 }),
+  });
+
   const products = productsData?.items || [];
+  const companies = companiesData?.items || [];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -157,7 +165,7 @@ export default function Home() {
               Equipos Mejor Valorados
             </h2>
 
-            {isLoading ? (
+            {isLoadingProducts ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="flex gap-4 bg-white rounded-[4px] p-4 border border-[#EBEBEB]">
@@ -192,28 +200,24 @@ export default function Home() {
           {/* RIGHT: Sidebar */}
           <div className="lg:col-span-1 space-y-8">
             {/* Recommended Companies */}
-            <div className="bg-white border border-[#EBEBEB] rounded-[4px] p-6 shadow-sm">
-              <h3 className="font-bold text-lg mb-4 text-[#2D2E2F]">
-                Distribuidores Recomendados
-              </h3>
-              <div className="space-y-5">
-                {[
-                  { initials: "CA", name: "Caterpillar Distribuidora MX", rating: 5, reviews: 128 },
-                  { initials: "TC", name: "Tractores del Centro", rating: 4, reviews: 84 },
-                  { initials: "KM", name: "Komatsu México", rating: 4, reviews: 62 },
-                ].map((company) => (
-                  <div key={company.name} className="flex gap-4 items-center">
-                    <div className="w-12 h-12 bg-[#F5F5F5] rounded-[4px] border border-[#EBEBEB] flex items-center justify-center font-bold text-[#5C6370] text-sm shrink-0">
-                      {company.initials}
-                    </div>
-                    <div>
-                      <a href="#" className="font-bold text-[#0073BB] hover:underline text-sm block mb-0.5">
-                        {company.name}
-                      </a>
-                      <StarRating rating={company.rating} count={company.reviews} size="sm" />
-                    </div>
-                  </div>
-                ))}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                 <h3 className="font-black text-xl text-[#1C2B3A]">
+                   Distribuidores
+                 </h3>
+                 <Link href="/distribuidores" className="text-[10px] font-black text-[#D32323] uppercase tracking-widest hover:underline">
+                    Ver todos
+                 </Link>
+              </div>
+              
+              <div className="space-y-6">
+                {isLoadingCompanies ? (
+                   [1, 2, 3].map((i) => <Skeleton key={i} className="h-48 w-full rounded-xl" />)
+                ) : (
+                  companies.map((company: any) => (
+                    <CompanyCard key={company.id} company={company} />
+                  ))
+                )}
               </div>
             </div>
 

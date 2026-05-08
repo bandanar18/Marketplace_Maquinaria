@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/context/auth-context";
+import { CompareProvider } from "@/context/compare-context";
 import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -14,10 +15,12 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <AuthProvider>
-        <Providers>
-          {children}
-          <Toaster position="top-right" richColors />
-        </Providers>
+        <CompareProvider>
+          <Providers>
+            {children}
+            <Toaster position="top-right" richColors />
+          </Providers>
+        </CompareProvider>
       </AuthProvider>
     </ThemeProvider>
   );

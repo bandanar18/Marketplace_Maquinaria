@@ -9,4 +9,8 @@ export declare class UpdateCompanyDto {
     city?: string;
     address?: string;
     logoUrl?: string;
+    coverUrl?: string;
+    openingHours?: any;
+    socialMedia?: any;
+    gallery?: string[];
 }

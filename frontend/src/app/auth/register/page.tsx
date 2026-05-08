@@ -45,7 +45,11 @@ const companySchema = z.object({
 type ClientFormValues = z.infer<typeof clientSchema>;
 type CompanyFormValues = z.infer<typeof companySchema>;
 
+import { useSearchParams } from "next/navigation";
+
 export default function RegisterPage() {
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get("type") === "company" ? "company" : "client";
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const { registerClient, registerCompany } = useAuth();
@@ -127,7 +131,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <Tabs defaultValue="client" className="w-full">
+        <Tabs defaultValue={defaultTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-8 max-w-md mx-auto h-14 p-1 bg-surface border border-steel/10">
             <TabsTrigger value="client" className="data-[state=active]:bg-white data-[state=active]:text-primary font-bold">
               <User className="mr-2 w-4 h-4" /> CLIENTE

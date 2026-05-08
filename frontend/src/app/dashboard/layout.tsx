@@ -22,7 +22,8 @@ import {
   History,
   LifeBuoy,
   Megaphone,
-  ShieldCheck
+  ShieldCheck,
+  BarChart3
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -55,9 +56,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { name: "Configuración", href: "/dashboard/settings", icon: Settings },
   ] : user.role === 'COMPANY_MEMBER' || user.companyRole ? [
     { name: "Resumen", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Estadísticas", href: "/dashboard/company/analytics", icon: BarChart3 },
     { name: "Inventario", href: "/dashboard/inventory", icon: Package },
     { name: "Cotizaciones", href: "/dashboard/quotes", icon: FileText },
     { name: "Mis Clientes", href: "/dashboard/company/customers", icon: Users },
+    { name: "Perfil de Empresa", href: "/dashboard/company/profile", icon: Building2 },
     { name: "Mi Equipo", href: "/dashboard/company/team", icon: ShieldCheck },
     { name: "Mensajes", href: "/dashboard/messages", icon: MessageSquare },
     { name: "Configuración", href: "/dashboard/settings", icon: Settings },

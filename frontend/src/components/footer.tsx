@@ -29,7 +29,7 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-[#E85D04] mb-4 text-sm">Empresas</h4>
             <ul className="space-y-2 text-sm text-[#5C6370]">
-              <li><Link href="/auth/register/company" className="hover:underline">Registrar tu empresa</Link></li>
+              <li><Link href="/auth/register?type=company" className="hover:underline">Registrar tu empresa</Link></li>
               <li><Link href="#" className="hover:underline">Casos de éxito</Link></li>
               <li><Link href="#" className="hover:underline">Planes y precios</Link></li>
               <li><Link href="#" className="hover:underline">Anúnciate con nosotros</Link></li>

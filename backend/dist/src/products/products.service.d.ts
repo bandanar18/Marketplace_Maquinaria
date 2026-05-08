@@ -131,6 +131,12 @@ export declare class ProductsService {
             name: string;
             slug: string;
         };
+        images: {
+            id: string;
+            order: number;
+            url: string;
+            productId: string;
+        }[];
         category: {
             id: string;
             name: string;
@@ -142,12 +148,6 @@ export declare class ProductsService {
             order: number;
             isActive: boolean;
         };
-        images: {
-            id: string;
-            order: number;
-            url: string;
-            productId: string;
-        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ProductStatus;
@@ -187,6 +187,12 @@ export declare class ProductsService {
         brandId: string | null;
     }>;
     getProductById(id: string): Promise<{
+        images: {
+            id: string;
+            order: number;
+            url: string;
+            productId: string;
+        }[];
         category: {
             id: string;
             name: string;
@@ -198,12 +204,6 @@ export declare class ProductsService {
             order: number;
             isActive: boolean;
         };
-        images: {
-            id: string;
-            order: number;
-            url: string;
-            productId: string;
-        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ProductStatus;

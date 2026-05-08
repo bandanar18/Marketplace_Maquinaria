@@ -108,6 +108,12 @@ export declare class ProductsController {
         };
     }>;
     getProductById(id: string): Promise<{
+        images: {
+            id: string;
+            order: number;
+            url: string;
+            productId: string;
+        }[];
         category: {
             id: string;
             name: string;
@@ -119,12 +125,6 @@ export declare class ProductsController {
             order: number;
             isActive: boolean;
         };
-        images: {
-            id: string;
-            order: number;
-            url: string;
-            productId: string;
-        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ProductStatus;
@@ -172,6 +172,12 @@ export declare class ProductsController {
             name: string;
             slug: string;
         };
+        images: {
+            id: string;
+            order: number;
+            url: string;
+            productId: string;
+        }[];
         category: {
             id: string;
             name: string;
@@ -183,12 +189,6 @@ export declare class ProductsController {
             order: number;
             isActive: boolean;
         };
-        images: {
-            id: string;
-            order: number;
-            url: string;
-            productId: string;
-        }[];
     } & {
         id: string;
         status: import(".prisma/client").$Enums.ProductStatus;

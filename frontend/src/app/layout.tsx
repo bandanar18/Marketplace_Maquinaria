@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Barlow_Condensed, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "@/components/client-layout";
+import { CompareBar } from "@/components/compare-bar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
       >
         <ClientLayout>
           {children}
+          <CompareBar />
         </ClientLayout>
       </body>
     </html>

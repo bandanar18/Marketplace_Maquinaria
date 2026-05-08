@@ -111,57 +111,57 @@ export default function CompanyTeamPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-black text-[#2D2E2F] tracking-tight flex items-center gap-2 uppercase">
-            <Users className="w-6 h-6 text-[#D32323]" /> Gestión de Equipo
-          </h1>
-          <p className="text-sm text-[#5C6370]">Administra los accesos y roles de tus colaboradores en el sistema.</p>
+          <h1 className="text-3xl font-black text-[#2D2E2F] tracking-tight">Gestión de Equipo</h1>
+          <p className="text-[#5C6370] mt-1 font-medium">Administra los accesos y roles de tus colaboradores.</p>
         </div>
 
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
-          <DialogTrigger
-            render={
-              <Button className="bg-[#D32323] hover:bg-[#A61A1A] font-bold">
-                <UserPlus className="w-4 h-4 mr-2" /> INVITAR MIEMBRO
-              </Button>
-            }
-          />
-          <DialogContent className="bg-white">
+          <DialogTrigger asChild>
+            <Button className="bg-[#D32323] hover:bg-[#A61A1A] font-bold h-12 px-6 shadow-lg shadow-red-500/10">
+              <UserPlus className="w-4 h-4 mr-2" /> INVITAR MIEMBRO
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-white rounded-xl">
             <DialogHeader>
-              <DialogTitle className="font-bold uppercase">Invitar Colaborador</DialogTitle>
-              <DialogDescription>
-                Envía una invitación por correo electrónico para que se una a tu equipo.
+              <DialogTitle className="text-xl font-bold">Invitar Colaborador</DialogTitle>
+              <DialogDescription className="font-medium">
+                Envía una invitación por correo electrónico para que se una a tu equipo comercial.
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleInvite} className="space-y-4 pt-4">
+            <form onSubmit={handleInvite} className="space-y-6 pt-4">
               <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase text-[#9099A6]">Correo Electrónico</Label>
-                <Input 
-                  type="email" 
-                  placeholder="ejemplo@empresa.com" 
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  className="border-[#EBEBEB]"
-                  required
-                />
+                <Label className="text-xs font-black uppercase text-[#9099A6]">Correo Electrónico</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input 
+                    type="email" 
+                    placeholder="vendedor@empresa.com" 
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    className="pl-10 border-gray-200 focus:border-[#D32323] focus:ring-0"
+                    required
+                  />
+                </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase text-[#9099A6]">Rol Asignado</Label>
+                <Label className="text-xs font-black uppercase text-[#9099A6]">Rol del Miembro</Label>
                 <Select value={inviteRole} onValueChange={setInviteRole}>
-                  <SelectTrigger className="border-[#EBEBEB]">
+                  <SelectTrigger className="border-gray-200 focus:border-[#D32323] focus:ring-0">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="MEMBER">Miembro (Solo Gestión)</SelectItem>
-                    <SelectItem value="ADMIN">Administrador (Gestión + Configuración)</SelectItem>
+                    <SelectItem value="MEMBER">Vendedor (Gestiona inventario y cotizaciones)</SelectItem>
+                    <SelectItem value="ADMIN">Administrador (Gestión total del perfil)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <DialogFooter className="pt-4">
+              <DialogFooter className="pt-4 gap-2">
                 <Button type="button" variant="ghost" onClick={() => setIsInviteOpen(false)} className="font-bold">CANCELAR</Button>
-                <Button type="submit" className="bg-[#D32323] hover:bg-[#A61A1A] font-bold" disabled={inviteMutation.isPending}>
-                  {inviteMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "ENVIAR INVITACIÓN"}
+                <Button type="submit" className="bg-[#1C2B3A] hover:bg-[#2d4156] text-white font-bold h-12" disabled={inviteMutation.isPending}>
+                  {inviteMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Mail className="w-4 h-4 mr-2" />}
+                  ENVIAR INVITACIÓN
                 </Button>
               </DialogFooter>
             </form>

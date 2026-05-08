@@ -75,10 +75,10 @@ export function Header() {
         {/* Right Actions */}
         <div className="flex items-center gap-4 shrink-0">
           <Link
-            href="/auth/register/company"
+            href="/vende"
             className="text-white font-bold text-sm hover:text-gray-200 hidden md:block"
           >
-            Para Empresas
+            Vende tu Maquinaria
           </Link>
 
           {user ? (
@@ -186,11 +186,11 @@ export function Header() {
             Marketplace
           </Link>
           <Link
-            href="/auth/register/company"
+            href="/vende"
             className="block text-white font-semibold border-b border-white/10 pb-3"
             onClick={() => setIsMenuOpen(false)}
           >
-            Para Empresas
+            Vende tu Maquinaria
           </Link>
           <Link
             href="/dashboard"

@@ -20,6 +20,9 @@ export class CompaniesService {
       include: {
         members: {
           select: { id: true, firstName: true, lastName: true, role: true, companyRole: true }
+        },
+        images: {
+          orderBy: { order: 'asc' }
         }
       }
     });
@@ -32,6 +35,7 @@ export class CompaniesService {
   }
 
   async updateMyCompany(companyId: string | null, userId: string, dto: UpdateCompanyDto) {
+    console.log('UPDATING COMPANY:', companyId, 'DTO:', dto);
     if (!companyId) {
       throw new UnauthorizedException('User does not belong to a company');
     }
@@ -41,9 +45,35 @@ export class CompaniesService {
       throw new UnauthorizedException('Insufficient permissions to update company profile');
     }
 
-    return this.prisma.company.update({
-      where: { id: companyId },
-      data: dto,
+    const { gallery, ...updateData } = dto;
+
+    // Use transaction to ensure both updates succeed
+    return this.prisma.$transaction(async (tx) => {
+      // 1. Update basic data
+      const company = await tx.company.update({
+        where: { id: companyId },
+        data: updateData,
+      });
+
+      // 2. Handle gallery if provided
+      if (gallery) {
+        // Simple approach: delete all and recreate (suitable for small galleries)
+        await tx.companyImage.deleteMany({
+          where: { companyId }
+        });
+
+        if (gallery.length > 0) {
+          await tx.companyImage.createMany({
+            data: gallery.map((url, index) => ({
+              companyId,
+              url,
+              order: index
+            }))
+          });
+        }
+      }
+
+      return company;
     });
   }
 
@@ -302,9 +332,11 @@ export class CompaniesService {
           slug: true,
           name: true,
           logoUrl: true,
+          coverUrl: true,
           description: true,
           city: true,
           country: true,
+          openingHours: true,
           verifiedAt: true,
           _count: {
             select: {

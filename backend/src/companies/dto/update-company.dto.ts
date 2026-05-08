@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsArray } from 'class-validator';
 
 export class UpdateCompanyDto {
   @IsString()
@@ -40,4 +40,19 @@ export class UpdateCompanyDto {
   @IsString()
   @IsOptional()
   logoUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  coverUrl?: string;
+
+  @IsOptional()
+  openingHours?: any;
+
+  @IsOptional()
+  socialMedia?: any;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  gallery?: string[];
 }

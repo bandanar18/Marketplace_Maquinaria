@@ -167,7 +167,7 @@ export default function CompaniesPage() {
               Aumenta tus ventas publicando tu inventario en la plataforma líder del sector industrial.
             </p>
             <Link
-              href="/auth/register/company"
+              href="/auth/register?type=company"
               className="block w-full bg-[#D32323] hover:bg-[#A61A1A] text-white font-bold py-3.5 rounded-[4px] transition-colors shadow-md"
             >
               Registrar Empresa

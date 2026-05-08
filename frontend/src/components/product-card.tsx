@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Calendar, Heart } from "lucide-react";
+import { MapPin, Calendar, Heart, Scale } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/auth-context";
+import { useCompare } from "@/context/compare-context";
 import { favoritesService } from "@/services/favorites.service";
 import { toast } from "sonner";
 import { StarRating } from "@/components/star-rating";
@@ -15,8 +16,11 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { user } = useAuth();
+  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
   const [isFavorited, setIsFavorited] = useState(false);
   const [isPending, setIsPending] = useState(false);
+
+  const isComparing = isInCompare(product.id);
 
   const isRental =
     product.transactionType === "RENTAL" || product.transactionType === "BOTH";
@@ -65,6 +69,16 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const toggleCompare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isComparing) {
+      removeFromCompare(product.id);
+    } else {
+      addToCompare(product);
+    }
+  };
+
   const getPriceDisplay = () => {
     if (isRental && product.pricePerDay) {
       return `$${new Intl.NumberFormat().format(Number(product.pricePerDay))} / día`;
@@ -109,20 +123,34 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-        {/* Favorite */}
-        <button
-          onClick={toggleFavorite}
-          disabled={isPending}
-          className={`absolute top-2 right-2 p-2 rounded-full shadow-sm transition-all ${
-            isFavorited
-              ? "bg-[#D32323] text-white"
-              : "bg-white/90 text-[#2D2E2F] hover:text-[#D32323]"
-          }`}
-        >
-          <Heart
-            className={`w-4 h-4 ${isFavorited ? "fill-current" : ""}`}
-          />
-        </button>
+        {/* Action Buttons */}
+        <div className="absolute top-2 right-2 flex flex-col gap-2">
+           <button
+             onClick={toggleFavorite}
+             disabled={isPending}
+             className={`p-2 rounded-full shadow-sm transition-all ${
+               isFavorited
+                 ? "bg-[#D32323] text-white"
+                 : "bg-white/90 text-[#2D2E2F] hover:text-[#D32323]"
+             }`}
+           >
+             <Heart
+               className={`w-4 h-4 ${isFavorited ? "fill-current" : ""}`}
+             />
+           </button>
+
+           <button
+             onClick={toggleCompare}
+             className={`p-2 rounded-full shadow-sm transition-all ${
+               isComparing
+                 ? "bg-[#0073BB] text-white"
+                 : "bg-white/90 text-[#2D2E2F] hover:text-[#0073BB]"
+             }`}
+             title="Comparar equipo"
+           >
+             <Scale className="w-4 h-4" />
+           </button>
+        </div>
       </div>
 
       {/* Content */}
