@@ -20,7 +20,8 @@ import {
   X,
   Loader2,
   FileText,
-  Download
+  Download,
+  Award
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -35,6 +36,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -279,7 +281,6 @@ export default function AdminCompaniesPage() {
                             </>
                           )}
                         </div>
-                      </div>
                     </div>
                   </div>
                </CardContent>

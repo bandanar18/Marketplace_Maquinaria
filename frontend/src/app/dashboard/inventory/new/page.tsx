@@ -375,8 +375,6 @@ export default function NewProductPage() {
             </Card>
           </div>
 
-          </div>
-
           {/* Right Column: Images & Metadata (Span 4) */}
           <div className="lg:col-span-4 space-y-6">
             <Card className="border-steel/10 shadow-sm sticky top-8">

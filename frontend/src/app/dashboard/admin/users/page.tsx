@@ -219,11 +219,13 @@ export default function AdminUsersPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="w-8 h-8">
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
+                        <DropdownMenuTrigger
+                          render={
+                            <Button variant="ghost" size="icon" className="w-8 h-8">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          }
+                        />
                         <DropdownMenuContent align="end" className="bg-white border-[#EBEBEB]">
                           <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-wider text-[#9099A6]">Seguridad</DropdownMenuLabel>
                           {user.status !== 'ACTIVE' && (

@@ -109,8 +109,8 @@ export default function RegisterPage() {
           <p className="text-steel mb-8">
             Hemos enviado un correo de verificación. Por favor revisa tu bandeja de entrada para activar tu cuenta.
           </p>
-          <Button asChild className="w-full bg-primary font-bold">
-            <Link href="/auth/login">IR AL LOGIN</Link>
+          <Button render={<Link href="/auth/login" />} className="w-full bg-primary font-bold">
+            IR AL LOGIN
           </Button>
         </Card>
       </div>
