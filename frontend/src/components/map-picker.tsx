@@ -1,17 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-// Fix for default marker icon in Leaflet
-const icon = L.icon({
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { useState, useCallback, useEffect } from "react";
 
 interface MapPickerProps {
   initialLat?: number;
@@ -19,39 +9,59 @@ interface MapPickerProps {
   onChange: (lat: number, lng: number) => void;
 }
 
-function LocationMarker({ position, setPosition, onChange }: any) {
-  useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-      onChange(e.latlng.lat, e.latlng.lng);
-    },
-  });
-
-  return position === null ? null : (
-    <Marker position={position} icon={icon} />
-  );
-}
+const mapContainerStyle = {
+  width: "100%",
+  height: "100%",
+};
 
 export default function MapPicker({ initialLat, initialLng, onChange }: MapPickerProps) {
-  const [position, setPosition] = useState<L.LatLng | null>(
-    initialLat && initialLng ? new L.LatLng(initialLat, initialLng) : null
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(
+    initialLat && initialLng ? { lat: initialLat, lng: initialLng } : null
   );
 
-  const defaultCenter: [number, number] = [initialLat || 25.6866, initialLng || -100.3161]; // Monterrey as default
+  const onMapClick = useCallback((e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      const newPos = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+      setPosition(newPos);
+      onChange(newPos.lat, newPos.lng);
+    }
+  }, [onChange]);
+
+  const defaultCenter = { 
+    lat: initialLat || 10.4806, 
+    lng: initialLng || -66.9036 
+  }; // Caracas as default
+
+  if (!isLoaded) {
+    return (
+      <div className="h-[300px] w-full bg-[#F5F5F5] animate-pulse flex items-center justify-center text-gray-400 font-bold rounded-lg border border-gray-200">
+        Cargando Mapa...
+      </div>
+    );
+  }
 
   return (
     <div className="h-[300px] w-full rounded-lg overflow-hidden border border-gray-200">
-      <MapContainer 
-        center={defaultCenter} 
-        zoom={initialLat ? 13 : 5} 
-        style={{ height: "100%", width: "100%" }}
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={position || defaultCenter}
+        zoom={position ? 14 : 6}
+        onClick={onMapClick}
+        options={{
+          disableDefaultUI: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+        }}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <LocationMarker position={position} setPosition={setPosition} onChange={onChange} />
-      </MapContainer>
+        {position && (
+          <Marker position={position} />
+        )}
+      </GoogleMap>
     </div>
   );
 }

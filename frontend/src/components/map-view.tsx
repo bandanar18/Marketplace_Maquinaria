@@ -1,16 +1,7 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-// Fix for default marker icon
-const icon = L.icon({
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from "@react-google-maps/api";
+import { useState } from "react";
 
 interface MapViewProps {
   lat: number;
@@ -19,30 +10,58 @@ interface MapViewProps {
   title?: string;
 }
 
+const mapContainerStyle = {
+  width: "100%",
+  height: "100%",
+};
+
 export default function MapView({ lat, lng, address, title }: MapViewProps) {
-  const position: [number, number] = [lat, lng];
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const [showInfoWindow, setShowInfoWindow] = useState(true);
+
+  const position = { lat, lng };
+
+  if (!isLoaded) {
+    return (
+      <div className="h-[400px] w-full bg-[#F5F5F5] animate-pulse flex items-center justify-center text-gray-400 font-bold rounded-xl border border-[#EBEBEB]">
+        Cargando Mapa...
+      </div>
+    );
+  }
 
   return (
     <div className="h-[400px] w-full rounded-xl overflow-hidden border border-[#EBEBEB] shadow-sm">
-      <MapContainer 
-        center={position} 
-        zoom={14} 
-        style={{ height: "100%", width: "100%" }}
-        scrollWheelZoom={false}
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={position}
+        zoom={14}
+        options={{
+          disableDefaultUI: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+        }}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        <Marker 
+          position={position} 
+          onClick={() => setShowInfoWindow(true)}
         />
-        <Marker position={position} icon={icon}>
-          <Popup>
-            <div className="text-sm">
-              <p className="font-bold text-[#D32323] mb-1">{title || "Ubicación del Equipo"}</p>
-              <p className="text-[#5C6370]">{address || "Ubicación aproximada"}</p>
+        
+        {showInfoWindow && (
+          <InfoWindow
+            position={position}
+            onCloseClick={() => setShowInfoWindow(false)}
+          >
+            <div className="p-1 max-w-[200px]">
+              <p className="font-bold text-[#D32323] text-sm mb-0.5">{title || "Ubicación del Equipo"}</p>
+              <p className="text-[#5C6370] text-xs">{address || "Ubicación aproximada"}</p>
             </div>
-          </Popup>
-        </Marker>
-      </MapContainer>
+          </InfoWindow>
+        )}
+      </GoogleMap>
     </div>
   );
 }
