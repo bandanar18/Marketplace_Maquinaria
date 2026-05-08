@@ -5,35 +5,35 @@ export declare class CategoriesService {
     getCategoryTree(): Promise<any[]>;
     createCategory(dto: any): Promise<{
         id: string;
-        name: string;
         slug: string;
+        name: string;
         description: string | null;
         iconUrl: string | null;
-        parentId: string | null;
         level: number;
         order: number;
         isActive: boolean;
+        parentId: string | null;
     }>;
     updateCategory(id: string, dto: any): Promise<{
         id: string;
-        name: string;
         slug: string;
+        name: string;
         description: string | null;
         iconUrl: string | null;
-        parentId: string | null;
         level: number;
         order: number;
         isActive: boolean;
+        parentId: string | null;
     }>;
     deleteCategory(id: string): Promise<{
         id: string;
-        name: string;
         slug: string;
+        name: string;
         description: string | null;
         iconUrl: string | null;
-        parentId: string | null;
         level: number;
         order: number;
         isActive: boolean;
+        parentId: string | null;
     }>;
 }

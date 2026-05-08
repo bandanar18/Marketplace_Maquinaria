@@ -37,6 +37,13 @@ export class CategoriesService {
 
   async createCategory(dto: any) {
     const slug = dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    
+    // Check if slug already exists
+    const existing = await this.prisma.category.findUnique({ where: { slug } });
+    if (existing) {
+      throw new Error(`La categoría con el nombre "${dto.name}" ya existe.`);
+    }
+
     return this.prisma.category.create({
       data: {
         ...dto,
@@ -47,7 +54,17 @@ export class CategoriesService {
 
   async updateCategory(id: string, dto: any) {
     if (dto.name) {
-      dto.slug = dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const slug = dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      
+      // Check if slug exists in another category
+      const existing = await this.prisma.category.findFirst({ 
+        where: { slug, id: { not: id } } 
+      });
+      if (existing) {
+        throw new Error(`Ya existe otra categoría con el nombre "${dto.name}".`);
+      }
+      
+      dto.slug = slug;
     }
     return this.prisma.category.update({
       where: { id },

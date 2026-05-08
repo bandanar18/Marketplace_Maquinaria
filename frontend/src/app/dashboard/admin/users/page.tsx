@@ -29,6 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -227,21 +228,23 @@ export default function AdminUsersPage() {
                           }
                         />
                         <DropdownMenuContent align="end" className="bg-white border-[#EBEBEB]">
-                          <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-wider text-[#9099A6]">Seguridad</DropdownMenuLabel>
-                          {user.status !== 'ACTIVE' && (
-                            <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('ACTIVE'); }} className="text-success font-bold text-xs">
-                              <CheckCircle className="w-4 h-4 mr-2" /> Activar Usuario
+                          <DropdownMenuGroup>
+                            <DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-wider text-[#9099A6]">Seguridad</DropdownMenuLabel>
+                            {user.status !== 'ACTIVE' && (
+                              <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('ACTIVE'); }} className="text-success font-bold text-xs">
+                                <CheckCircle className="w-4 h-4 mr-2" /> Activar Usuario
+                              </DropdownMenuItem>
+                            )}
+                            {user.status === 'ACTIVE' && (
+                              <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('SUSPENDED'); }} className="text-warning font-bold text-xs">
+                                <Ban className="w-4 h-4 mr-2" /> Suspender Temporalmente
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('BANNED'); }} className="text-danger font-bold text-xs">
+                              <Shield className="w-4 h-4 mr-2" /> Banear permanentemente
                             </DropdownMenuItem>
-                          )}
-                          {user.status === 'ACTIVE' && (
-                            <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('SUSPENDED'); }} className="text-warning font-bold text-xs">
-                              <Ban className="w-4 h-4 mr-2" /> Suspender Temporalmente
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => { setSelectedUser(user); setStatusAction('BANNED'); }} className="text-danger font-bold text-xs">
-                            <Shield className="w-4 h-4 mr-2" /> Banear permanentemente
-                          </DropdownMenuItem>
+                          </DropdownMenuGroup>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>
