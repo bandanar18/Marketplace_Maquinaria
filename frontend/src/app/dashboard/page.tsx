@@ -211,7 +211,7 @@ export default function DashboardPage() {
               </ResponsiveContainer>
               <div className="absolute flex flex-col items-center justify-center pointer-events-none">
                  <span className="text-3xl font-black text-[#2D2E2F]">
-                    {Object.values(companyStats.statusDistribution).reduce((a: any, b: any) => a + b, 0)}
+                     {Object.values(companyStats.statusDistribution).reduce((a: number, b) => a + Number(b), 0)}
                  </span>
                  <span className="text-[9px] font-black text-[#9099A6] uppercase tracking-tighter">EQUIPOS</span>
               </div>

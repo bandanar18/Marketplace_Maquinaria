@@ -11,6 +11,7 @@ interface AuthContextType {
   login: (data: any) => Promise<void>;
   registerClient: (data: any) => Promise<void>;
   registerCompany: (data: any) => Promise<void>;
+  fetchUser: () => Promise<void>;
   logout: () => void;
 }
 
@@ -45,6 +46,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (data: any) => {
     const { access_token: accessToken } = await authService.login(data);
+    if (!accessToken) {
+      throw new Error('Login response did not include an access token');
+    }
     localStorage.setItem('token', accessToken);
     setToken(accessToken);
     // Fetch full user profile (includes companyRole, company, etc.)
@@ -70,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, login, registerClient, registerCompany, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, login, registerClient, registerCompany, fetchUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

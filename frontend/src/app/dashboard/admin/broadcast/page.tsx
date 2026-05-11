@@ -81,7 +81,7 @@ export default function AdminBroadcastPage() {
                <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
                     <Label className="text-[10px] font-black uppercase text-[#9099A6]">Grupo Destinatario</Label>
-                    <Select value={target} onValueChange={setTarget}>
+                    <Select value={target} onValueChange={(value) => value && setTarget(value)}>
                        <SelectTrigger className="border-[#EBEBEB]">
                           <SelectValue placeholder="Seleccionar audiencia" />
                        </SelectTrigger>

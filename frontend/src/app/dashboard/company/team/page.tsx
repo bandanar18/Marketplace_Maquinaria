@@ -147,7 +147,7 @@ export default function CompanyTeamPage() {
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-black uppercase text-[#9099A6]">Rol del Miembro</Label>
-                <Select value={inviteRole} onValueChange={setInviteRole}>
+                <Select value={inviteRole} onValueChange={(value) => value && setInviteRole(value)}>
                   <SelectTrigger className="border-gray-200 focus:border-[#D32323] focus:ring-0">
                     <SelectValue />
                   </SelectTrigger>

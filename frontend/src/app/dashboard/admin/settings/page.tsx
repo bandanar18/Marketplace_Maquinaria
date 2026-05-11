@@ -9,9 +9,9 @@ import {
   Mail, 
   Phone, 
   Globe, 
-  Facebook, 
-  Instagram, 
-  Twitter, 
+  ThumbsUp, 
+  Camera, 
+  MessageCircle, 
   Search, 
   Info,
   Loader2,
@@ -167,7 +167,7 @@ export default function AdminSettingsPage() {
                  <div className="grid gap-4">
                     <div className="flex items-center gap-3">
                        <div className="w-10 h-10 rounded bg-[#1877F2]/10 flex items-center justify-center shrink-0">
-                          <Facebook className="w-5 h-5 text-[#1877F2]" />
+                           <ThumbsUp className="w-5 h-5 text-[#1877F2]" />
                        </div>
                        <Input 
                         placeholder="https://facebook.com/..." 
@@ -178,7 +178,7 @@ export default function AdminSettingsPage() {
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="w-10 h-10 rounded bg-[#E4405F]/10 flex items-center justify-center shrink-0">
-                          <Instagram className="w-5 h-5 text-[#E4405F]" />
+                           <Camera className="w-5 h-5 text-[#E4405F]" />
                        </div>
                        <Input 
                         placeholder="https://instagram.com/..." 
@@ -189,7 +189,7 @@ export default function AdminSettingsPage() {
                     </div>
                     <div className="flex items-center gap-3">
                        <div className="w-10 h-10 rounded bg-[#1DA1F2]/10 flex items-center justify-center shrink-0">
-                          <Twitter className="w-5 h-5 text-[#1DA1F2]" />
+                           <MessageCircle className="w-5 h-5 text-[#1DA1F2]" />
                        </div>
                        <Input 
                         placeholder="https://twitter.com/..." 

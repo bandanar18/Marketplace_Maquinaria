@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { productsService } from "@/services/products.service";
 import { Header } from "@/components/header";
@@ -18,7 +18,7 @@ const SearchMap = dynamic(() => import("@/components/search-map"), {
   loading: () => <div className="h-full w-full bg-[#F5F5F5] animate-pulse flex items-center justify-center text-gray-400 font-bold">Cargando Mapa de Maquinaria...</div>
 });
 
-export default function MarketplacePage() {
+function MarketplaceContent() {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") || "";
   const [search, setSearch] = useState(initialSearch);
@@ -337,5 +337,13 @@ export default function MarketplacePage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function MarketplacePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <MarketplaceContent />
+    </Suspense>
   );
 }
